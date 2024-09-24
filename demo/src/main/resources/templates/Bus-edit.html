@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <title>Title</title>
+</head>
+<body>
+<div class="navbar">
+    <button class="nav-button" onclick="location.href='Bus-list.html'" type="button">INICIO</button>
+    <button class="nav-button" onclick="location.href='Bus-add.html'" type="button">AGREGAR BUS</button>
+</div>
+
+<h1 class="main-title">TRANSMILENIO</h1>
+<div class="form-container">
+    <h2 class="form-title">Editar Bus</h2>
+    <h3 class="form-subtitle">Rellene todos los espacios</h3>
+    <form action="#" th:action="@{/bus/save}" th:object="${bus}" method="post">
+        <input type="hidden" th:field="*{id}" id="id">
+        <div class="form-group">
+            <label class="form-label">Placa:</label>
+            <input type="text" class="form-input" th:field="*{placa}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Modelo:</label>
+            <input type="text" class="form-input" th:field="*{modelo}" required>
+        </div>
+        <input type="submit" value="Editar Bus" class="form-submit">
+    </form>
+</div>
+</body>
+</html>

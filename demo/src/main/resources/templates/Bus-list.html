@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/css/estilo.css}">
+  <meta charset="UTF-8">
+  <title>Lista de Buses</title>
+</head>
+<body>
+  <table class="entity-list">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>PLACA</th>
+          <th>MODELO</th>
+          <th>EDITAR</th>
+          <th>ELIMINAR</th>
+        </tr>
+      </thead>
+    <tbody>
+      <tr th:each="bus : ${buses}">
+        <td th:text="${bus.id}"></td>
+        <td th:text="${bus.Placa}"></td>
+        <td th:text="${bus.Modelo}"></td>
+        <td>
+          <a th:href="@{/bus/edit-form/{id}(id=${bus.id})}">Editar</a>
+        </td>
+        <td>
+          <form th:action="@{/bus/delete/{id}(id=${bus.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este bus?');">
+            <button type="submit">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="#" th:href="@{/bus/add-form}">Agregar Bus</a>
+</body>
+</html>
+

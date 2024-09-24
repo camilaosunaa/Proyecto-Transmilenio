@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <meta charset="UTF-8">
+    <title>Lista de Conductores</title>
+</head>
+<body>
+<h1>TRANSMILENIO</h1>
+<h2>Lista Conductores</h2>
+<div class="tabla">
+    <table>
+        <thead>
+        <tr>
+            <th class="encabezado"><b>ID</b></th>
+            <th class="encabezado"><b>Nombre</b></th>
+            <th class="encabezado"><b>Cedula</b></th>
+            <th class="encabezado"><b>Telefono</b></th>
+            <th class="encabezado"><b>Direccion</b></th>
+            <th class="encabezado"><b>Placa</b></th>
+            <th class="encabezado"><b>Horario</b></th>
+            <th class="encabezado"><b>Editar</b></th>
+            <th class="encabezado"><b>Eliminar</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="conductor : ${conductores}">
+            <td th:text="${conductor.id}"></td>
+            <td th:text="${conductor.nombre}"></td>
+            <td th:text="${conductor.cedula}"></td>
+            <td th:text="${conductor.telefono}"></td>
+            <td th:text="${conductor.direccion}"></td>
+            <td th:text="${busPlacas[conductor.id_bus]}"></td>
+            <td th:text="${diaHorario[conductor.id_horario]}"></td>
+            <td>
+                <a th:href="@{/conductor/edit-form/{id}(id=${conductor.id})}">Editar</a>
+            </td>
+            <td>
+                <form th:action="@{/conductor/delete/{id}(id=${conductor.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este conductor?');">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tbody>
+    </table>
+    <a href="#" th:href="@{/conductor/add-form}">Agregar Conductor</a>
+</div>
+</body>
+</html>
+
+
+

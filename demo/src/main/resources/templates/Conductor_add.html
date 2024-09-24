@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <title>Agregar Conductor</title>
+</head>
+<body>
+<div class="navbar">
+    <button class="nav-button" onclick="location.href='Conductor-list.html'" type="button">INICIO</button>
+    <button class="nav-button" onclick="location.href='Conductor-edit.html'" type="button">EDITAR CONDUCTOR</button>
+</div>
+<h1 class="main-title">TRANSMILENIO</h1>
+<div class="form-container">
+    <h2 class="form-title">Agregar Conductor</h2>
+    <h3 class="form-subtitle">Rellene todos los espacios</h3>
+    <form action="#"  th:action="@{/conductor/save}" th:object="${conductor}" method="post">
+        <div class="form-group">
+            <label class="form-label">Nombre:</label>
+            <input type="text" class="form-input" th:field="*{nombre}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Cédula:</label>
+            <input type="number" class="form-input" th:field="*{cedula}" required>
+        </div>
+        <div class="form-group">
+            <label  class="form-label">Teléfono:</label>
+            <input type="number" class="form-input" th:field="*{telefono}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Dirección:</label>
+            <input type="text" class="form-input" th:field="*{direccion}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" >Bus:</label>
+            <select  th:field="*{id_bus}" required>
+                <option value="" th:text="'Seleccione un bus'"></option>
+                <option th:each="bus : ${buses}" th:value="${bus.id}" th:text="${bus.placa}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Horario:</label>
+            <select th:field="*{id_horario}" required>
+                <option value="" th:text="'Seleccione un horario'"></option>
+                <option th:each="horario : ${horarios}" th:value="${horario.id}" th:text="${horario.dia}"></option>
+            </select>
+        </div>
+        <input type="submit" value="Enviar" class="form-submit">
+    </form>
+</div>
+</body>
+</html>
