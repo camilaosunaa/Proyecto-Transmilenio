@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.Conversion.BusDTOConverter;
+import com.example.demo.DTO.BusDTO;
 import com.example.demo.modelo.Bus;
 import com.example.demo.repositories.RepositorioBus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,28 @@ public class ServiceBus  {
     @Autowired
     private RepositorioBus RB;
 
+    @Autowired
+    private BusDTOConverter busDTOConverter;
+
+    public BusDTO getBUs(Long id){
+        return busDTOConverter.EntityToDTO(obtenerBusPorId(id));
+    }
+
+    public BusDTO createBus(BusDTO busDTO){
+        Bus bus = busDTOConverter.DTOToEntity(busDTO);
+        return busDTOConverter.EntityToDTO(RB.save(bus));
+    }
+
+    public BusDTO UpdateBus(Long idBUs, BusDTO busDTO){
+        Bus bus = busDTOConverter.DTOToEntity(busDTO);
+        bus.setId(idBUs);
+        return busDTOConverter.EntityToDTO(RB.save(bus));
+    }
+
     public String obtenerPlacaBus(Long idBus) {
         Bus bus = RB.findById(idBus).orElse(null);
         return (bus != null) ? bus.getPlaca() : "Sin asignar";
     }
-
 
     public void eliminarBus(Long id){
         RB.deleteById(id);

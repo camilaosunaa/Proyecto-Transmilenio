@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.Conversion.ConductorDTOConverter;
+import com.example.demo.DTO.ConductorDTO;
 import com.example.demo.modelo.Bus;
 import com.example.demo.modelo.Conductor;
 import com.example.demo.repositories.RepositorioBus;
@@ -18,6 +20,25 @@ public class ServiceConductor {
 
     @Autowired
     private RepositorioBus busRepository;
+
+    @Autowired
+    private ConductorDTOConverter conductorDTOConverter;
+
+    public ConductorDTO getConductor(Long id){
+        return conductorDTOConverter.EntityToDTO(recuperarConductor(id));
+    }
+
+    public ConductorDTO createConductor(ConductorDTO conductorDTO){
+        Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        return conductorDTOConverter.EntityToDTO(repositorioConductor.save(conductor));
+    }
+
+    public ConductorDTO UpdateConductor(Long id, ConductorDTO conductorDTO){
+        Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        conductor.setId(id);
+        return conductorDTOConverter.EntityToDTO(repositorioConductor.save(conductor));
+    }
+
 
     public void eliminarConductor(Long id) {
         repositorioConductor.deleteById(id);

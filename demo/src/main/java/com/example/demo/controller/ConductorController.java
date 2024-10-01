@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.qos.logback.core.model.Model;
+import com.example.demo.DTO.ConductorDTO;
 import com.example.demo.init.inicializadorDB;
 import com.example.demo.modelo.Bus;
 import com.example.demo.modelo.Conductor;
@@ -13,7 +13,10 @@ import com.example.demo.service.ServiceBus;
 import com.example.demo.service.ServiceConductor;
 import com.example.demo.service.ServiceHorario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import jakarta.validation.Valid;
 
-@Controller
+@RestController
 @RequestMapping("/conductor")
 public class ConductorController {
 
@@ -34,7 +37,38 @@ public class ConductorController {
     @Autowired
     private ServiceHorario serviceHorario;
 
+    @GetMapping("/{idconductor}")
+    public ResponseEntity<ConductorDTO> RecuperarConductor(@PathVariable Long idconductor){
+        ConductorDTO conductorDTO = serviceConductor.getConductor(idconductor);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Content-type", "application/json")
+                .body(conductorDTO);
+    }
+
+    @GetMapping
+    public List<Conductor> RecuperarConductor(){
+        List<Conductor> conductores = serviceConductor.recuperarTodoConductor();
+        return conductores;
+    }
+
+    @PostMapping
+    public ConductorDTO CrearConductor(@RequestBody ConductorDTO conductorDTO){
+        return serviceConductor.createConductor(conductorDTO);
+    }
+
+    @PutMapping("/{idbus}")
+    public ConductorDTO actualizarConductor(@PathVariable Long idConductor, @RequestBody ConductorDTO conductorDTO){
+        return serviceConductor.UpdateConductor(idConductor,conductorDTO);
+    }
+
     @GetMapping("/list")
+    public String ListaConductores(Model model){
+        List<Conductor> conductores = serviceConductor.ListaConductor();
+        model.addAttribute("conductores",conductores);
+        return "Conductor-list";
+    }
+
+    /*@GetMapping("/list")
     public ModelAndView listaConductores() {
         // Obtener la lista de conductores
         List<Conductor> conductores = serviceConductor.ListaConductor();
@@ -134,5 +168,5 @@ public class ConductorController {
             return new ModelAndView("error", "message", "No se pudo eliminar el conductor. Puede que no exista.");
         }
         return new RedirectView("/conductor/list");
-    }
+    }*/
 }
