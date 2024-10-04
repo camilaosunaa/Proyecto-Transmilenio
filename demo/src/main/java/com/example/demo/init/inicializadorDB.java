@@ -43,18 +43,18 @@ public class inicializadorDB implements CommandLineRunner {
         jdbcTemplate.execute("DROP TABLE IF EXISTS ruta CASCADE");
 
         // Crea las tablas necesarias antes de insertar datos
-        jdbcTemplate.execute("CREATE TABLE horario (id BIGINT AUTO_INCREMENT PRIMARY KEY, dia VARCHAR(255) NOT NULL, hora_inicio TIME NOT NULL, hora_final TIME NOT NULL)");
+        jdbcTemplate.execute("CREATE TABLE horario (id BIGINT AUTO_INCREMENT PRIMARY KEY, dia INT NOT NULL,mes INT NOT NULL,año INT NOT NULL, hora_inicio TIME NOT NULL, hora_final TIME NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE bus (id BIGINT AUTO_INCREMENT PRIMARY KEY, placa VARCHAR(255) NOT NULL, modelo VARCHAR(255) NOT NULL, ruta_id BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE conductor (id BIGINT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255) NOT NULL, cedula BIGINT NOT NULL, telefono BIGINT NOT NULL, direccion VARCHAR(255) NOT NULL, bus_id BIGINT NOT NULL, id_horario BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE asignacion (id BIGINT AUTO_INCREMENT PRIMARY KEY)");
         jdbcTemplate.execute("CREATE TABLE ruta (id BIGINT AUTO_INCREMENT PRIMARY KEY, codigo VARCHAR(255) NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE estacion (id BIGINT AUTO_INCREMENT PRIMARY KEY,nombre VARCHAR(255) NOT NULL, ruta_id BIGINT NOT NULL,FOREIGN KEY (ruta_id) REFERENCES ruta(id) ON DELETE CASCADE)");
         // Crea y guarda los horarios
-        Horario horario1 = new Horario(null, "Lunes", LocalTime.of(8, 0), LocalTime.of(16, 0));
-        Horario horario2 = new Horario(null, "Martes", LocalTime.of(9, 0), LocalTime.of(17, 0));
-        Horario horario3 = new Horario(null, "Miercoles", LocalTime.of(10, 0), LocalTime.of(18, 0));
-        Horario horario4 = new Horario(null, "Jueves", LocalTime.of(8, 30), LocalTime.of(16, 30));
-        Horario horario5 = new Horario(null, "Viernes", LocalTime.of(7, 0), LocalTime.of(15, 0));
+        Horario horario1 = new Horario(null, 14,10,2024, LocalTime.of(8, 0), LocalTime.of(16, 0));
+        Horario horario2 = new Horario(null, 10,10,2024, LocalTime.of(9, 0), LocalTime.of(17, 0));
+        Horario horario3 = new Horario(null, 24,10,2024, LocalTime.of(10, 0), LocalTime.of(18, 0));
+        Horario horario4 = new Horario(null, 31,10,2024, LocalTime.of(8, 30), LocalTime.of(16, 30));
+        Horario horario5 = new Horario(null, 20,10,2024, LocalTime.of(7, 0), LocalTime.of(15, 0));
 
         horario1 = repositorioHorario.save(horario1);
         horario2 = repositorioHorario.save(horario2);

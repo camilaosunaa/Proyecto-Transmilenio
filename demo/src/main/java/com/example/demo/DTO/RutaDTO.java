@@ -16,5 +16,5 @@ public class RutaDTO {
 
     private String codigo;
 
-    private List<Estacion> estaciones;
+    private List<EstacionDTO> estaciones;
 }

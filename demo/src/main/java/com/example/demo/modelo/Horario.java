@@ -21,7 +21,13 @@ public class Horario {
     private Long id; // Use camelCase for variables
 
     @Column(name = "dia", nullable = false)
-    private String dia; // Use camelCase for variables
+    private int dia; // Use camelCase for variables
+
+    @Column(name="mes", nullable = false)
+    private int mes;
+
+    @Column(name = "año", nullable = false)
+    private int anho;
 
     @Column(name = "hora_inicio", nullable = false )
     private LocalTime horaInicio;

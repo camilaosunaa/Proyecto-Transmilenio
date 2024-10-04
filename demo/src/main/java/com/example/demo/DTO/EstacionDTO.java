@@ -14,5 +14,5 @@ public class EstacionDTO {
 
     private String nombre;
 
-    private Ruta ruta;
+    private Long rutaId;
 }

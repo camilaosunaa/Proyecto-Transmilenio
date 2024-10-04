@@ -46,7 +46,7 @@ public class ConductorController {
     }
 
     @GetMapping
-    public List<Conductor> RecuperarConductor(){
+    public List<Conductor> RecuperarConductores(){
         List<Conductor> conductores = serviceConductor.recuperarTodoConductor();
         return conductores;
     }
