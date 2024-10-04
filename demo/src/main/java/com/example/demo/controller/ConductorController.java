@@ -56,17 +56,12 @@ public class ConductorController {
         return serviceConductor.createConductor(conductorDTO);
     }
 
-    @PutMapping("/{idbus}")
+    @PutMapping("/{idconductor}")
     public ConductorDTO actualizarConductor(@PathVariable Long idConductor, @RequestBody ConductorDTO conductorDTO){
         return serviceConductor.UpdateConductor(idConductor,conductorDTO);
     }
 
-    @GetMapping("/list")
-    public String ListaConductores(Model model){
-        List<Conductor> conductores = serviceConductor.ListaConductor();
-        model.addAttribute("conductores",conductores);
-        return "Conductor-list";
-    }
+
 
     /*@GetMapping("/list")
     public ModelAndView listaConductores() {

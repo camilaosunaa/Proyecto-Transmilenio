@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -21,4 +22,10 @@ public class Horario {
 
     @Column(name = "dia", nullable = false)
     private String dia; // Use camelCase for variables
+
+    @Column(name = "hora_inicio", nullable = false )
+    private LocalTime horaInicio;
+
+    @Column(name = "hora_final", nullable = false)
+    private LocalTime horaFinal;
 }

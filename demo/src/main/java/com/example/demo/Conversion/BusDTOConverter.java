@@ -10,11 +10,11 @@ import java.util.Optional;
 @Component
 public class BusDTOConverter {
     public BusDTO EntityToDTO(Bus bus){
-        return new BusDTO(bus.getId(), bus.getPlaca(), bus.getModelo());
+        return new BusDTO(bus.getId(), bus.getPlaca(), bus.getModelo(), bus.getIdRuta());
     }
 
     public Bus DTOToEntity(BusDTO busDTO){
-        return new Bus(busDTO.getId(), busDTO.getPlaca(), busDTO.getPlaca());
+        return new Bus(busDTO.getId(), busDTO.getPlaca(), busDTO.getPlaca(), busDTO.getIdRuta());
     }
 
     public List<BusDTO> entityToDTO(Optional<Bus> buses){

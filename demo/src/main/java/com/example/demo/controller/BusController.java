@@ -20,7 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/bus")
 public class BusController {
     @Autowired
@@ -53,12 +53,6 @@ public class BusController {
         return serviceBus.UpdateBus(idBus,busDTO);
     }
 
-    @GetMapping("/list")
-    public String ListaBuses(Model model) {
-        List<Bus> buses = serviceBus.ListaBuses();
-        model.addAttribute("buses",buses);
-        return "Bus-list";
-    }
 
     /*@GetMapping("/list")
     public ModelAndView ListaBuses(){

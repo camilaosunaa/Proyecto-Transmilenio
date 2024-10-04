@@ -1,5 +1,6 @@
 package com.example.demo.DTO;
 
+import com.example.demo.modelo.Ruta;
 import lombok.*;
 
 @Getter
@@ -7,9 +8,11 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class BusDTO {
+public class EstacionDTO {
+
     private Long id;
-    private String placa;
-    private String Modelo;
-    private Long idRuta;
+
+    private String nombre;
+
+    private Ruta ruta;
 }

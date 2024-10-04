@@ -22,4 +22,7 @@ public class Bus {
 
     @Column(name = "modelo", nullable = false)
     private String modelo; // Use camelCase for variables
+
+    @Column(name = "ruta_id" , nullable = false)
+    private Long idRuta;
 }
