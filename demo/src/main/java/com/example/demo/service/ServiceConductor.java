@@ -49,7 +49,7 @@ public class ServiceConductor {
     }
 
     public Conductor recuperarConductor(Long id){
-        return repositorioConductor.findById(id).orElseThrow();
+        return repositorioConductor.findById(id) .orElseThrow(() -> new RuntimeException("Conductor no encontrado con id: " + id));
     }
 
     public List<Conductor> recuperarTodoConductor(){return repositorioConductor.findAll();}
