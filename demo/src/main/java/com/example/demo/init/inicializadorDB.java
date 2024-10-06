@@ -26,9 +26,6 @@ public class inicializadorDB implements CommandLineRunner {
     private RepositorioRuta repositorioRuta;
 
     @Autowired
-    private RepositorioEstacion repositorioEstacion;
-
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
@@ -39,22 +36,21 @@ public class inicializadorDB implements CommandLineRunner {
         jdbcTemplate.execute("DROP TABLE IF EXISTS conductor CASCADE");
         jdbcTemplate.execute("DROP TABLE IF EXISTS bus CASCADE");
         jdbcTemplate.execute("DROP TABLE IF EXISTS horario CASCADE");
-        jdbcTemplate.execute("DROP TABLE IF EXISTS estacion CASCADE");
         jdbcTemplate.execute("DROP TABLE IF EXISTS ruta CASCADE");
 
         // Crea las tablas necesarias antes de insertar datos
-        jdbcTemplate.execute("CREATE TABLE horario (id BIGINT AUTO_INCREMENT PRIMARY KEY, dia INT NOT NULL,mes INT NOT NULL,año INT NOT NULL, hora_inicio TIME NOT NULL, hora_final TIME NOT NULL)");
+        jdbcTemplate.execute("CREATE TABLE horario (id BIGINT AUTO_INCREMENT PRIMARY KEY, dia INT NOT NULL, mes INT NOT NULL, año INT NOT NULL, hora_inicio TIME NOT NULL, hora_final TIME NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE bus (id BIGINT AUTO_INCREMENT PRIMARY KEY, placa VARCHAR(255) NOT NULL, modelo VARCHAR(255) NOT NULL, ruta_id BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE conductor (id BIGINT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255) NOT NULL, cedula BIGINT NOT NULL, telefono BIGINT NOT NULL, direccion VARCHAR(255) NOT NULL, bus_id BIGINT NOT NULL, id_horario BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE asignacion (id BIGINT AUTO_INCREMENT PRIMARY KEY)");
         jdbcTemplate.execute("CREATE TABLE ruta (id BIGINT AUTO_INCREMENT PRIMARY KEY, codigo VARCHAR(255) NOT NULL)");
-        jdbcTemplate.execute("CREATE TABLE estacion (id BIGINT AUTO_INCREMENT PRIMARY KEY,nombre VARCHAR(255) NOT NULL, ruta_id BIGINT NOT NULL,FOREIGN KEY (ruta_id) REFERENCES ruta(id) ON DELETE CASCADE)");
+
         // Crea y guarda los horarios
-        Horario horario1 = new Horario(null, 14,10,2024, LocalTime.of(8, 0), LocalTime.of(16, 0));
-        Horario horario2 = new Horario(null, 10,10,2024, LocalTime.of(9, 0), LocalTime.of(17, 0));
-        Horario horario3 = new Horario(null, 24,10,2024, LocalTime.of(10, 0), LocalTime.of(18, 0));
-        Horario horario4 = new Horario(null, 31,10,2024, LocalTime.of(8, 30), LocalTime.of(16, 30));
-        Horario horario5 = new Horario(null, 20,10,2024, LocalTime.of(7, 0), LocalTime.of(15, 0));
+        Horario horario1 = new Horario(null, 14, 10, 2024, LocalTime.of(8, 0), LocalTime.of(16, 0));
+        Horario horario2 = new Horario(null, 10, 10, 2024, LocalTime.of(9, 0), LocalTime.of(17, 0));
+        Horario horario3 = new Horario(null, 24, 10, 2024, LocalTime.of(10, 0), LocalTime.of(18, 0));
+        Horario horario4 = new Horario(null, 31, 10, 2024, LocalTime.of(8, 30), LocalTime.of(16, 30));
+        Horario horario5 = new Horario(null, 20, 10, 2024, LocalTime.of(7, 0), LocalTime.of(15, 0));
 
         horario1 = repositorioHorario.save(horario1);
         horario2 = repositorioHorario.save(horario2);
@@ -62,29 +58,15 @@ public class inicializadorDB implements CommandLineRunner {
         horario4 = repositorioHorario.save(horario4);
         horario5 = repositorioHorario.save(horario5);
 
+        // Crea y guarda las rutas
         Ruta ruta1 = new Ruta(null, "RUTA-01", new ArrayList<>());
         Ruta ruta2 = new Ruta(null, "RUTA-02", new ArrayList<>());
         ruta1 = repositorioRuta.save(ruta1);
         ruta2 = repositorioRuta.save(ruta2);
 
-        List<Estacion> estacionesRuta1 = List.of(
-                new Estacion(null, "Estación A", ruta1),
-                new Estacion(null, "Estación B", ruta1),
-                new Estacion(null, "Estación C", ruta1)
-        );
-
-        List<Estacion> estacionesRuta2 = List.of(
-                new Estacion(null, "Estación X", ruta2),
-                new Estacion(null, "Estación Y", ruta2),
-                new Estacion(null, "Estación Z", ruta2)
-        );
-
-        repositorioEstacion.saveAll(estacionesRuta1);
-        repositorioEstacion.saveAll(estacionesRuta2);
-
-        // Actualiza las rutas con las estaciones
-        ruta1.setEstaciones(estacionesRuta1);
-        ruta2.setEstaciones(estacionesRuta2);
+        // Actualiza las rutas con estaciones (elimina el código relacionado con Estacion)
+        ruta1.setEstaciones(List.of("Estación A", "Estación B", "Estación C"));
+        ruta2.setEstaciones(List.of("Estación X", "Estación Y", "Estación Z"));
 
         repositorioRuta.save(ruta1);
         repositorioRuta.save(ruta2);

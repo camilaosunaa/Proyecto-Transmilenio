@@ -22,6 +22,9 @@ public class Ruta {
     @Column(name = "codigo", nullable = false)
     private String codigo;
 
-    @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Estacion> estaciones;
+    @ElementCollection
+    @CollectionTable(name = "ruta_estaciones", joinColumns = @JoinColumn(name = "ruta_id"))
+    @Column(name = "estacion")
+    private List<String> estaciones;
 }
+

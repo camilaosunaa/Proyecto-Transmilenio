@@ -1,8 +1,6 @@
 package com.example.demo.Conversion;
 
-import com.example.demo.DTO.EstacionDTO;
 import com.example.demo.DTO.HorarioDTO;
-import com.example.demo.modelo.Estacion;
 import com.example.demo.modelo.Horario;
 import org.springframework.stereotype.Component;
 

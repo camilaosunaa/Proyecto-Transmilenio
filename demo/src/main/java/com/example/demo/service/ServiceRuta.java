@@ -29,12 +29,12 @@ public class ServiceRuta {
     public RutaDTO getRuta(Long id){return rutaDTOConverter.EntityToDTO(RecuperarRuta(id));}
 
     public RutaDTO createRuta(RutaDTO rutaDTO){
-        Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO,repositorioRuta);
+        Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
     }
 
     public RutaDTO updateRuta(Long id, RutaDTO rutaDTO){
-        Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO,repositorioRuta);
+        Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
         ruta.setId(id);
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
     }
