@@ -34,7 +34,7 @@ public class HorarioController {
         return serviceHorario.createHorario(horarioDTO);
     }
 
-    @PutMapping
+    @PutMapping ("/{idhorario}")
     public HorarioDTO ActualizarHorario(@PathVariable Long idhorario, @RequestBody HorarioDTO horarioDTO){
         return serviceHorario.UpdateHorario(idhorario,horarioDTO);
     }
