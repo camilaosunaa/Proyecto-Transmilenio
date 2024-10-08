@@ -38,4 +38,9 @@ public class HorarioController {
     public HorarioDTO ActualizarHorario(@PathVariable Long idhorario, @RequestBody HorarioDTO horarioDTO){
         return serviceHorario.UpdateHorario(idhorario,horarioDTO);
     }
+
+    @DeleteMapping ("/{idhorario}")
+    public  void  EliminarHorario(@PathVariable Long idhorario){
+        serviceHorario.deleteHorario(idhorario);
+    }
 }

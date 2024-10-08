@@ -33,6 +33,12 @@ public class ServiceRuta {
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
     }
 
+    public void deleteRuta(Long id){
+        Ruta ruta = repositorioRuta.findById(id)
+                .orElseThrow(() -> new RuntimeException("Conductor no encontrado con id: " + id));
+        repositorioRuta.delete(ruta);
+    }
+
     public RutaDTO updateRuta(Long id, RutaDTO rutaDTO){
         Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
         ruta.setId(id);

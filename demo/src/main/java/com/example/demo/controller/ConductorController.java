@@ -61,4 +61,8 @@
             return serviceConductor.UpdateConductor(idConductor,conductorDTO);
         }
 
+        @DeleteMapping("/{idConductor}")
+        public void deleteConductor(@PathVariable Long idConductor){
+            serviceConductor.DeleteConductor(idConductor);
+        }
     }

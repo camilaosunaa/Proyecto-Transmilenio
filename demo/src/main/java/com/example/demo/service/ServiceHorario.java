@@ -26,6 +26,12 @@ public class ServiceHorario {
 
     public HorarioDTO getHorario(Long id){return horarioDTOConverter.EntityToDTO(recuperarHorario(id));}
 
+    public void deleteHorario(Long id){
+        Horario horario = repositorioHorario.findById(id)
+                .orElseThrow(() -> new RuntimeException("Horario no encontrado con id: " + id));
+        repositorioHorario.delete(horario);
+    }
+
     public HorarioDTO createHorario(HorarioDTO horarioDTO){
         Horario horario = horarioDTOConverter.DTOToEntity(horarioDTO);
         return horarioDTOConverter.EntityToDTO(repositorioHorario.save(horario));

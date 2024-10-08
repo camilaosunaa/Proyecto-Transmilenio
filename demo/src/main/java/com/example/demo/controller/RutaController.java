@@ -39,4 +39,9 @@ public class RutaController {
     public RutaDTO ActualizarRuta(@PathVariable Long idruta, @RequestBody RutaDTO rutaDTO){
         return serviceRuta.updateRuta(idruta,rutaDTO);
     }
+
+    @DeleteMapping("/{idruta}")
+    public void EliminarRuta(@PathVariable Long idruta){
+        serviceRuta.deleteRuta(idruta);
+    }
 }

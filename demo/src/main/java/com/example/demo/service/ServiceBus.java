@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.Conversion.BusDTOConverter;
 import com.example.demo.DTO.BusDTO;
 import com.example.demo.modelo.Bus;
+import com.example.demo.modelo.Horario;
 import com.example.demo.repositories.RepositorioBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,11 @@ public class ServiceBus  {
 
     public BusDTO getBUs(Long id){
         return busDTOConverter.EntityToDTO(obtenerBusPorId(id));
+    }
+
+    public void deleteBus(Long id){
+        Bus bus = RB.findById(id).orElseThrow(() -> new RuntimeException("Conductor no encontrado con id: " + id));
+        RB.delete(bus);
     }
 
     public BusDTO createBus(BusDTO busDTO){

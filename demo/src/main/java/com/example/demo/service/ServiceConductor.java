@@ -28,6 +28,12 @@ public class ServiceConductor {
         return conductorDTOConverter.EntityToDTO(recuperarConductor(id));
     }
 
+    public void DeleteConductor(Long id) {
+        Conductor conductor = repositorioConductor.findById(id)
+                .orElseThrow(() -> new RuntimeException("Conductor no encontrado con id: " + id));
+        repositorioConductor.delete(conductor);
+    }
+
     public ConductorDTO createConductor(ConductorDTO conductorDTO){
         Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
         return conductorDTOConverter.EntityToDTO(repositorioConductor.save(conductor));
@@ -40,7 +46,7 @@ public class ServiceConductor {
     }
 
 
-    public void eliminarConductor(Long id) {
+    public void EliminarConductor(Long id) {
         repositorioConductor.deleteById(id);
     }
 
