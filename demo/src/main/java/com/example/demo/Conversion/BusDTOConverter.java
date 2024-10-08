@@ -14,7 +14,7 @@ public class BusDTOConverter {
     }
 
     public Bus DTOToEntity(BusDTO busDTO){
-        return new Bus(busDTO.getId(), busDTO.getPlaca(), busDTO.getPlaca(), busDTO.getIdRuta());
+        return new Bus(busDTO.getId(), busDTO.getPlaca(), busDTO.getModelo(), busDTO.getIdRuta());
     }
 
     public List<BusDTO> entityToDTO(Optional<Bus> buses){

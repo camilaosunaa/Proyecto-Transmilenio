@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 public class RutaDTOConverter {
 
     public RutaDTO EntityToDTO(Ruta ruta) {
-        return new RutaDTO(ruta.getId(), ruta.getCodigo(), ruta.getEstaciones());
+        return new RutaDTO(ruta.getId(), ruta.getCodigo(), ruta.getEstaciones(), ruta.getIdhorario());
     }
 
     // Convierte un DTO RutaDTO a una entidad Ruta
     public Ruta DTOToEntity(RutaDTO rutaDTO) {
-        return new Ruta(rutaDTO.getId(), rutaDTO.getCodigo(), rutaDTO.getEstaciones());
+        return new Ruta(rutaDTO.getId(), rutaDTO.getCodigo(), rutaDTO.getEstaciones(), rutaDTO.getIdhorario());
     }
 
     public List<RutaDTO> entityToDTO(Optional<Ruta> rutas){

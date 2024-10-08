@@ -17,4 +17,6 @@ public class RutaDTO {
     private String codigo;
 
     private List<String> estaciones;
+
+    private Long idhorario;
 }

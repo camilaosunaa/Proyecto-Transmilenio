@@ -26,5 +26,8 @@ public class Ruta {
     @CollectionTable(name = "ruta_estaciones", joinColumns = @JoinColumn(name = "ruta_id"))
     @Column(name = "estacion")
     private List<String> estaciones;
+
+    @Column(name = "idhorario",nullable = false)
+    private Long idhorario;
 }
 

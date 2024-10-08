@@ -33,6 +33,7 @@ public class inicializadorDB implements CommandLineRunner {
 
         // Elimina las tablas existentes para evitar problemas de integridad referencial
         jdbcTemplate.execute("DROP TABLE IF EXISTS asignacion CASCADE");
+        jdbcTemplate.execute("drop table if exists ruta_estaciones cascade ");
         jdbcTemplate.execute("DROP TABLE IF EXISTS conductor CASCADE");
         jdbcTemplate.execute("DROP TABLE IF EXISTS bus CASCADE");
         jdbcTemplate.execute("DROP TABLE IF EXISTS horario CASCADE");
@@ -43,8 +44,8 @@ public class inicializadorDB implements CommandLineRunner {
         jdbcTemplate.execute("CREATE TABLE bus (id BIGINT AUTO_INCREMENT PRIMARY KEY, placa VARCHAR(255) NOT NULL, modelo VARCHAR(255) NOT NULL, ruta_id BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE conductor (id BIGINT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255) NOT NULL, cedula BIGINT NOT NULL, telefono BIGINT NOT NULL, direccion VARCHAR(255) NOT NULL, bus_id BIGINT NOT NULL, id_horario BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE asignacion (id BIGINT AUTO_INCREMENT PRIMARY KEY)");
-        jdbcTemplate.execute("CREATE TABLE ruta (id BIGINT AUTO_INCREMENT PRIMARY KEY, codigo VARCHAR(255) NOT NULL)");
-
+        jdbcTemplate.execute("CREATE TABLE ruta (id BIGINT AUTO_INCREMENT PRIMARY KEY, codigo VARCHAR(255) NOT NULL,idhorario BIGINT NOT NULL)");
+        jdbcTemplate.execute("CREATE TABLE ruta_estaciones (ruta_id BIGINT NOT NULL, estacion VARCHAR(255) NOT NULL)");
         // Crea y guarda los horarios
         Horario horario1 = new Horario(null, 14, 10, 2024, LocalTime.of(8, 0), LocalTime.of(16, 0));
         Horario horario2 = new Horario(null, 10, 10, 2024, LocalTime.of(9, 0), LocalTime.of(17, 0));
@@ -59,8 +60,8 @@ public class inicializadorDB implements CommandLineRunner {
         horario5 = repositorioHorario.save(horario5);
 
         // Crea y guarda las rutas
-        Ruta ruta1 = new Ruta(null, "RUTA-01", new ArrayList<>());
-        Ruta ruta2 = new Ruta(null, "RUTA-02", new ArrayList<>());
+        Ruta ruta1 = new Ruta(null, "RUTA-01", new ArrayList<>(),horario2.getId());
+        Ruta ruta2 = new Ruta(null, "RUTA-02", new ArrayList<>(),horario1.getId());
         ruta1 = repositorioRuta.save(ruta1);
         ruta2 = repositorioRuta.save(ruta2);
 
