@@ -61,5 +61,9 @@ public class BusController {
         return serviceBus.UpdateBus(idBus,busDTO);
     }
 
+    @GetMapping("/conductor/{idconductor}")
+    public List<BusDTO> busesPorIdConductor(@PathVariable Long idconductor){
+        return serviceBus.recuperarBusPorIdConductor(idconductor);
+    }
 }
 

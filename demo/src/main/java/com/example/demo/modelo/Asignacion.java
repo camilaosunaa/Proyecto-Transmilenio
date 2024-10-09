@@ -35,8 +35,8 @@ public class Asignacion {
 
     @ManyToMany
     @JoinTable(
-            name = "asignacion_horarios",
+            name = "asignacion_rutas",
             joinColumns = @JoinColumn(name = "asignacion_id"),
-            inverseJoinColumns = @JoinColumn(name = "horarios_id"))
-    private List<Horario> horarios;
+            inverseJoinColumns = @JoinColumn(name = "rutas_id"))
+    private List<Ruta> rutas;
 }

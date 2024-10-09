@@ -3,16 +3,13 @@ package com.example.demo.service;
 import com.example.demo.Conversion.BusDTOConverter;
 import com.example.demo.DTO.BusDTO;
 import com.example.demo.modelo.Bus;
-import com.example.demo.modelo.Conductor;
-import com.example.demo.modelo.Horario;
-import com.example.demo.modelo.Ruta;
 import com.example.demo.repositories.RepositorioBus;
 import com.example.demo.repositories.RepositorioConductor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ServiceBus  {
@@ -29,6 +26,17 @@ public class ServiceBus  {
         return busDTOConverter.EntityToDTO(findBusById(id));
     }
 
+    public List<BusDTO> recuperarBusPorIdConductor(Long idConductor){
+        List<Bus> buses = recuperarTodosBuses();
+        List<BusDTO> busesDTO = new ArrayList<>();
+        for(Bus b:buses){
+            if(b.getConductor().getId() == idConductor){
+                BusDTO busDTO = busDTOConverter.EntityToDTO(b);
+                busesDTO.add(busDTO);
+            }
+        }
+        return busesDTO;
+    }
 
     public BusDTO createBus(BusDTO busDTO){
         Bus bus = busDTOConverter.DTOToEntity(busDTO);

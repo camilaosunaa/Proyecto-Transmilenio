@@ -7,6 +7,7 @@ import com.example.demo.repositories.RepositorioRuta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,20 @@ public class ServiceRuta {
     public RutaDTO createRuta(RutaDTO rutaDTO){
         Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
+    }
+
+    public List<RutaDTO> buscarRutaPorIdBus(Long idbus){
+        List<Ruta> rutas = RecuperarTodaRuta();
+
+        List<RutaDTO> rutasDTO = new ArrayList<>();
+
+        for (Ruta r: rutas) {
+            if(r.getBus().getId() == idbus){
+                RutaDTO rutaDTO = rutaDTOConverter.EntityToDTO(r);
+                rutasDTO.add(rutaDTO);
+            }
+        }
+        return rutasDTO;
     }
 
     public RutaDTO updateRuta(Long id, RutaDTO rutaDTO){

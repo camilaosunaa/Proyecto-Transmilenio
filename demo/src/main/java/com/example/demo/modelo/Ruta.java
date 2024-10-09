@@ -32,8 +32,7 @@ public class Ruta {
     @JoinColumn(name = "idbus",referencedColumnName = "id")
     private Bus bus;
 
-    @OneToOne
-    @JoinColumn(name = "idhorario",nullable = false)
-    private Horario horario;
+    @JoinColumn(name = "horario",nullable = false)
+    private String horario;
 }
 

@@ -35,7 +35,7 @@ public class RutaController {
                         ruta.getCodigo(),
                         ruta.getEstaciones(),
                         ruta.getBus().getId(),
-                        ruta.getHorario().getId()))
+                        ruta.getHorario()))
                 .collect(Collectors.toList());
 
         return rutasDTO;
@@ -49,6 +49,11 @@ public class RutaController {
     @PutMapping("/{idruta}")
     public RutaDTO ActualizarRuta(@PathVariable Long idruta, @RequestBody RutaDTO rutaDTO){
         return serviceRuta.updateRuta(idruta,rutaDTO);
+    }
+
+    @GetMapping("/bus/{idbus}")
+    public List<RutaDTO> recuperarRutasPorIdbus(@PathVariable Long idbus){
+        return serviceRuta.buscarRutaPorIdBus(idbus);
     }
 
 }

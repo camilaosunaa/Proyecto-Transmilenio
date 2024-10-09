@@ -14,5 +14,5 @@ public class RutaDTO {
     private String codigo;
     private List<String> estaciones;
     private Long idBus;
-    private Long idHorario;
+    private String horario;
 }
