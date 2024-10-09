@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/bus")
@@ -26,8 +27,6 @@ public class BusController {
     @Autowired
     private ServiceBus serviceBus;
 
-    @Autowired
-    private  ServiceConductor serviceConductor;
 
     @GetMapping("/{idBus}")
     public ResponseEntity<BusDTO> RecuperaBus(@PathVariable Long idBus){
@@ -38,9 +37,18 @@ public class BusController {
     }
 
     @GetMapping
-    public List<Bus> RecuperarBuses(){
+    public List<BusDTO> RecuperarBuses(){
         List<Bus> buses = serviceBus.recuperarTodosBuses();
-        return buses;
+
+        // Convertir lista de buses a lista de DTOs
+        List<BusDTO> busesDTO = buses.stream()
+                .map(bus -> new BusDTO(
+                        bus.getId(),
+                        bus.getPlaca(),
+                        bus.getModelo(),
+                        bus.getConductor().getId()))
+                .collect(Collectors.toList());
+        return busesDTO;
     }
 
     @PostMapping
@@ -53,9 +61,5 @@ public class BusController {
         return serviceBus.UpdateBus(idBus,busDTO);
     }
 
-    @DeleteMapping("/{idBus}")
-    public void eliminarBUs(@PathVariable Long idBus){
-        serviceBus.deleteBus(idBus);
-    }
 }
 

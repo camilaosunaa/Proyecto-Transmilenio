@@ -14,6 +14,5 @@ public interface RepositorioConductor extends JpaRepository<Conductor, Long> {
     List<Conductor> findAllByTelefono(Long telefono);
     List<Conductor> findAllByDireccion(String direccion);
 
-    //void deleteById(Long id);
 }
 

@@ -3,8 +3,11 @@ package com.example.demo.service;
 import com.example.demo.Conversion.BusDTOConverter;
 import com.example.demo.DTO.BusDTO;
 import com.example.demo.modelo.Bus;
+import com.example.demo.modelo.Conductor;
 import com.example.demo.modelo.Horario;
+import com.example.demo.modelo.Ruta;
 import com.example.demo.repositories.RepositorioBus;
+import com.example.demo.repositories.RepositorioConductor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,53 +20,33 @@ public class ServiceBus  {
     private RepositorioBus RB;
 
     @Autowired
+    private RepositorioConductor conductorRepository;
+
+    @Autowired
     private BusDTOConverter busDTOConverter;
 
     public BusDTO getBUs(Long id){
-        return busDTOConverter.EntityToDTO(obtenerBusPorId(id));
+        return busDTOConverter.EntityToDTO(findBusById(id));
     }
 
-    public void deleteBus(Long id){
-        Bus bus = RB.findById(id).orElseThrow(() -> new RuntimeException("Conductor no encontrado con id: " + id));
-        RB.delete(bus);
-    }
 
     public BusDTO createBus(BusDTO busDTO){
         Bus bus = busDTOConverter.DTOToEntity(busDTO);
         return busDTOConverter.EntityToDTO(RB.save(bus));
     }
 
-    public BusDTO UpdateBus(Long idBUs, BusDTO busDTO){
+    public BusDTO UpdateBus(Long idBus, BusDTO busDTO) {
+
         Bus bus = busDTOConverter.DTOToEntity(busDTO);
-        bus.setId(idBUs);
+        bus.setId(idBus);
         return busDTOConverter.EntityToDTO(RB.save(bus));
     }
 
-    public String obtenerPlacaBus(Long idBus) {
-        Bus bus = RB.findById(idBus).orElse(null);
-        return (bus != null) ? bus.getPlaca() : "Sin asignar";
+    public Bus findBusById(Long id) {
+        return RB.findById(id).orElse(null);
     }
 
-    public void eliminarBus(Long id){
-        RB.deleteById(id);
-    }
-    public List<Bus> ListaBuses(){
+    public List<Bus> recuperarTodosBuses(){
         return RB.findAll();
     }
-    public List<Bus> recuperarTodosBuses() {
-        return RB.findAll();
-    }
-
-    public Bus obtenerBusPorId(Long id) {
-        Optional<Bus> bus = RB.findById(id);
-        if (bus.isPresent()) {
-            return bus.get();
-        } else {
-            throw new RuntimeException("Bus no encontrado con ID: " + id);
-        }
-    }
-    public Bus recuperarbus(Long id){return RB.findById(id).orElseThrow();}
-
-    public void guardarBus(Bus bus){RB.save(bus);}
-
 }

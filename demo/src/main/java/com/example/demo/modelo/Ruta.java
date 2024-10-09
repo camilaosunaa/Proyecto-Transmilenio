@@ -1,5 +1,6 @@
 package com.example.demo.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,12 @@ public class Ruta {
     @Column(name = "estacion")
     private List<String> estaciones;
 
-    @Column(name = "idhorario",nullable = false)
-    private Long idhorario;
+    @ManyToOne
+    @JoinColumn(name = "idbus",referencedColumnName = "id")
+    private Bus bus;
+
+    @OneToOne
+    @JoinColumn(name = "idhorario",nullable = false)
+    private Horario horario;
 }
 

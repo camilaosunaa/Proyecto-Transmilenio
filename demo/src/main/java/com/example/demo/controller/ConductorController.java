@@ -3,6 +3,7 @@
     import java.util.HashMap;
     import java.util.List;
     import java.util.Map;
+    import java.util.stream.Collectors;
 
     import com.example.demo.DTO.ConductorDTO;
     import com.example.demo.init.inicializadorDB;
@@ -31,12 +32,6 @@
         @Autowired
         private ServiceConductor serviceConductor;
 
-        @Autowired
-        private ServiceBus serviceBus;
-
-        @Autowired
-        private ServiceHorario serviceHorario;
-
         @GetMapping("/{idconductor}")
         public ResponseEntity<ConductorDTO> RecuperarConductor(@PathVariable Long idconductor){
             ConductorDTO conductorDTO = serviceConductor.getConductor(idconductor);
@@ -46,9 +41,20 @@
         }
 
         @GetMapping
-        public List<Conductor> RecuperarConductores() {
+        public List<ConductorDTO> RecuperarConductores() {
             List<Conductor> conductores = serviceConductor.recuperarTodoConductor();
-            return conductores;
+
+            // Convertir lista de conductores a lista de DTOs
+            List<ConductorDTO> conductoresDTO = conductores.stream()
+                    .map(conductor -> new ConductorDTO(
+                            conductor.getId(),
+                            conductor.getNombre(),
+                            conductor.getCedula(),
+                            conductor.getTelefono(),
+                            conductor.getDireccion()))
+                    .collect(Collectors.toList());
+
+            return conductoresDTO;
         }
 
         @PostMapping
@@ -61,8 +67,4 @@
             return serviceConductor.UpdateConductor(idConductor,conductorDTO);
         }
 
-        @DeleteMapping("/{idConductor}")
-        public void deleteConductor(@PathVariable Long idConductor){
-            serviceConductor.DeleteConductor(idConductor);
-        }
     }

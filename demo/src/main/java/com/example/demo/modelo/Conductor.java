@@ -1,5 +1,6 @@
 package com.example.demo.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,12 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 @Entity
 @Table(name = "conductor")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Conductor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +37,18 @@ public class Conductor {
     @NotBlank(message = "No puede estar en blanco")
     private String direccion;
 
-    @Column(name = "bus_id", nullable = true)
-    private Long id_bus;
+
+    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Bus> buses;
+
+    public Conductor(Long id, String nombre, Long cedula, Long telefono, String direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+
 
 }

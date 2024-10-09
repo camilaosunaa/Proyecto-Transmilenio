@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/horario")
@@ -25,8 +26,22 @@ public class HorarioController {
     }
 
     @GetMapping
-    public List<Horario> RecuperarHorarios(){
-        return serviceHorario.recuperarTodosHorarios();
+    public List<HorarioDTO> RecuperarHorarios(){
+        List<Horario> horarios = serviceHorario.recuperarTodosHorarios();
+
+        // Convertir lista de horarios a lista de DTOs
+        List<HorarioDTO> horariosDTO = horarios.stream()
+                .map(horario -> new HorarioDTO(
+                        horario.getId(),
+                        horario.getDiaSemana(),
+                        horario.getDia(),
+                        horario.getMes(),
+                        horario.getAnho(),
+                        horario.getHoraInicio(),
+                        horario.getHoraFinal()))
+                .collect(Collectors.toList());
+
+        return horariosDTO;
     }
 
     @PostMapping
@@ -39,8 +54,4 @@ public class HorarioController {
         return serviceHorario.UpdateHorario(idhorario,horarioDTO);
     }
 
-    @DeleteMapping ("/{idhorario}")
-    public  void  EliminarHorario(@PathVariable Long idhorario){
-        serviceHorario.deleteHorario(idhorario);
-    }
 }

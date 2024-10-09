@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ruta")
@@ -27,7 +28,17 @@ public class RutaController {
 
     @GetMapping
     public List<RutaDTO> RecuperarRutas(){
-        return serviceRuta.RecuperarTodaRuta();
+        List<Ruta> rutas = serviceRuta.RecuperarTodaRuta();
+        List<RutaDTO> rutasDTO = rutas.stream()
+                .map(ruta -> new RutaDTO(
+                        ruta.getId(),
+                        ruta.getCodigo(),
+                        ruta.getEstaciones(),
+                        ruta.getBus().getId(),
+                        ruta.getHorario().getId()))
+                .collect(Collectors.toList());
+
+        return rutasDTO;
     }
 
     @PostMapping
@@ -40,8 +51,4 @@ public class RutaController {
         return serviceRuta.updateRuta(idruta,rutaDTO);
     }
 
-    @DeleteMapping("/{idruta}")
-    public void EliminarRuta(@PathVariable Long idruta){
-        serviceRuta.deleteRuta(idruta);
-    }
 }

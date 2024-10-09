@@ -10,11 +10,11 @@ import java.util.Optional;
 @Component
 public class HorarioDTOConverter {
     public HorarioDTO EntityToDTO(Horario horario){
-        return new HorarioDTO(horario.getId(), horario.getDia(),horario.getMes(),horario.getAnho(),horario.getHoraInicio(),horario.getHoraFinal());
+        return new HorarioDTO(horario.getId(),horario.getDiaSemana() ,horario.getDia(),horario.getMes(),horario.getAnho(),horario.getHoraInicio(),horario.getHoraFinal());
     }
 
     public Horario DTOToEntity(HorarioDTO horarioDTO){
-        return new Horario(horarioDTO.getId(), horarioDTO.getDia(),horarioDTO.getMes(),horarioDTO.getAnho(),horarioDTO.getHoraInicio(),horarioDTO.getHoraFinal());
+        return new Horario(horarioDTO.getId(), horarioDTO.getDiaSemana() ,horarioDTO.getDia(),horarioDTO.getMes(),horarioDTO.getAnho(),horarioDTO.getHoraInicio(),horarioDTO.getHoraFinal());
     }
 
     public List<Horario> entityToDTO(Optional<HorarioDTO> horarioDTO){

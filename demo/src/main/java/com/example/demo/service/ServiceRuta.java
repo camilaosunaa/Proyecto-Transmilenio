@@ -18,11 +18,8 @@ public class ServiceRuta {
     @Autowired
     private RutaDTOConverter rutaDTOConverter;
 
-    public List<RutaDTO> RecuperarTodaRuta() {
-        List<Ruta> rutas = repositorioRuta.findAll();
-        return rutas.stream()
-                .map(rutaDTOConverter::EntityToDTO)
-                .collect(Collectors.toList());
+    public List<Ruta> RecuperarTodaRuta() {
+        return repositorioRuta.findAll();
     }
     public Ruta RecuperarRuta(Long id){return repositorioRuta.findById(id).orElseThrow();}
 
@@ -33,15 +30,13 @@ public class ServiceRuta {
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
     }
 
-    public void deleteRuta(Long id){
-        Ruta ruta = repositorioRuta.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conductor no encontrado con id: " + id));
-        repositorioRuta.delete(ruta);
-    }
-
     public RutaDTO updateRuta(Long id, RutaDTO rutaDTO){
         Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
         ruta.setId(id);
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
+    }
+
+    public Ruta findRutaById(Long id) {
+        return repositorioRuta.findById(id).orElse(null);
     }
 }

@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class HorarioDTO {
     private Long id;
+    private String diaSemana;
     private int dia; // Use camelCase for variables
     private int mes;
     private int anho;

@@ -13,5 +13,4 @@ public class ConductorDTO {
     private Long cedula;
     private Long telefono;
     private String direccion;
-    private Long id_bus;
 }
