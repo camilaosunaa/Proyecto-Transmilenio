@@ -38,6 +38,4 @@ public class Conductor {
     @Column(name = "bus_id", nullable = true)
     private Long id_bus;
 
-    @Column(name = "id_horario", nullable = false)
-    private Long id_horario;
 }

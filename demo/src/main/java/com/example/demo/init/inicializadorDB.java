@@ -42,7 +42,7 @@ public class inicializadorDB implements CommandLineRunner {
         // Crea las tablas necesarias antes de insertar datos
         jdbcTemplate.execute("CREATE TABLE horario (id BIGINT AUTO_INCREMENT PRIMARY KEY, dia INT NOT NULL, mes INT NOT NULL, año INT NOT NULL, hora_inicio TIME NOT NULL, hora_final TIME NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE bus (id BIGINT AUTO_INCREMENT PRIMARY KEY, placa VARCHAR(255) NOT NULL, modelo VARCHAR(255) NOT NULL, ruta_id BIGINT NOT NULL)");
-        jdbcTemplate.execute("CREATE TABLE conductor (id BIGINT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255) NOT NULL, cedula BIGINT NOT NULL, telefono BIGINT NOT NULL, direccion VARCHAR(255) NOT NULL, bus_id BIGINT NOT NULL, id_horario BIGINT NOT NULL)");
+        jdbcTemplate.execute("CREATE TABLE conductor (id BIGINT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255) NOT NULL, cedula BIGINT NOT NULL, telefono BIGINT NOT NULL, direccion VARCHAR(255) NOT NULL, bus_id BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE asignacion (id BIGINT AUTO_INCREMENT PRIMARY KEY)");
         jdbcTemplate.execute("CREATE TABLE ruta (id BIGINT AUTO_INCREMENT PRIMARY KEY, codigo VARCHAR(255) NOT NULL,idhorario BIGINT NOT NULL)");
         jdbcTemplate.execute("CREATE TABLE ruta_estaciones (ruta_id BIGINT NOT NULL, estacion VARCHAR(255) NOT NULL)");
@@ -80,16 +80,16 @@ public class inicializadorDB implements CommandLineRunner {
 
         // Crea y guarda los conductores
         List<Conductor> conductores = new ArrayList<>();
-        conductores.add(new Conductor(null, "Juan", 123456789L, 5551234L, "Calle 1", bus1.getId(), horario1.getId()));
-        conductores.add(new Conductor(null, "Pedro", 987654321L, 5555678L, "Calle 2", bus1.getId(), horario2.getId()));
-        conductores.add(new Conductor(null, "Luis", 456123789L, 5558765L, "Calle 3", bus2.getId(), horario1.getId()));
-        conductores.add(new Conductor(null, "Carlos", 789456123L, 5554321L, "Calle 4", bus2.getId(), horario2.getId()));
-        conductores.add(new Conductor(null, "Ana", 321654987L, 5556789L, "Calle 5", bus1.getId(), horario1.getId()));
-        conductores.add(new Conductor(null, "Maria", 654321789L, 5559876L, "Calle 6", bus1.getId(), horario2.getId()));
-        conductores.add(new Conductor(null, "Jose", 321987654L, 5552345L, "Calle 7", bus2.getId(), horario1.getId()));
-        conductores.add(new Conductor(null, "Rosa", 789123456L, 5558765L, "Calle 8", bus2.getId(), horario2.getId()));
-        conductores.add(new Conductor(null, "David", 456789123L, 5556543L, "Calle 9", bus1.getId(), horario1.getId()));
-        conductores.add(new Conductor(null, "Laura", 987321654L, 5553212L, "Calle 10", bus2.getId(), horario2.getId()));
+        conductores.add(new Conductor(null, "Juan", 123456789L, 5551234L, "Calle 1", bus1.getId()));
+        conductores.add(new Conductor(null, "Pedro", 987654321L, 5555678L, "Calle 2", bus1.getId()));
+        conductores.add(new Conductor(null, "Luis", 456123789L, 5558765L, "Calle 3", bus2.getId()));
+        conductores.add(new Conductor(null, "Carlos", 789456123L, 5554321L, "Calle 4", bus2.getId()));
+        conductores.add(new Conductor(null, "Ana", 321654987L, 5556789L, "Calle 5", bus1.getId()));
+        conductores.add(new Conductor(null, "Maria", 654321789L, 5559876L, "Calle 6", bus1.getId()));
+        conductores.add(new Conductor(null, "Jose", 321987654L, 5552345L, "Calle 7", bus2.getId()));
+        conductores.add(new Conductor(null, "Rosa", 789123456L, 5558765L, "Calle 8", bus2.getId()));
+        conductores.add(new Conductor(null, "David", 456789123L, 5556543L, "Calle 9", bus1.getId()));
+        conductores.add(new Conductor(null, "Laura", 987321654L, 5553212L, "Calle 10", bus2.getId()));
 
         // Guarda los conductores
         repositorioConductor.saveAll(conductores);
