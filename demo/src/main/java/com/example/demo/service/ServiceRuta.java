@@ -5,7 +5,9 @@ import com.example.demo.DTO.RutaDTO;
 import com.example.demo.modelo.Ruta;
 import com.example.demo.repositories.RepositorioRuta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +65,21 @@ public class ServiceRuta {
     }
 
     public RutaDTO updateRuta(Long id, RutaDTO rutaDTO) {
+        // Buscar la ruta existente en la base de datos
+        Ruta rutaExistente = repositorioRuta.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "La ruta no fue encontrada"));
+
+        // Verificar si la ruta ya tiene un bus asignado
+        if (rutaExistente.getBus() != null && rutaDTO.getIdBus() != null) {
+            // Si la ruta ya tiene un bus y se intenta asignar otro bus, lanzar excepción
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No se puede editar una ruta que ya tiene un bus asignado.");
+        }
+
+        // Convertir el DTO a la entidad y actualizar los datos
         Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
         ruta.setId(id);
 
-        // Permitir que el bus sea null si no está asignado
+        // Guardar la ruta actualizada y devolver el DTO resultante
         return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
     }
 

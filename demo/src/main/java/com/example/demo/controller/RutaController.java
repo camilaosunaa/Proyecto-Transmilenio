@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,18 +28,27 @@ public class RutaController {
     }
 
     @GetMapping
-    public List<RutaDTO> RecuperarRutas(){
-        List<Ruta> rutas = serviceRuta.RecuperarTodaRuta();
-        List<RutaDTO> rutasDTO = rutas.stream()
-                .map(ruta -> new RutaDTO(
-                        ruta.getId(),
-                        ruta.getCodigo(),
-                        ruta.getEstaciones(),
-                        ruta.getBus().getId(),
-                        ruta.getHorario()))
-                .collect(Collectors.toList());
+    public List<RutaDTO> RecuperarRutas() {
+        return serviceRuta.RecuperarTodaRuta().stream()
+                .map(ruta -> {
+                    RutaDTO dto = new RutaDTO();
+                    dto.setId(ruta.getId());
+                    dto.setCodigo(ruta.getCodigo());
+                    dto.setHorario(ruta.getHorario());
 
-        return rutasDTO;
+                    // Verificamos si el Bus no es nulo antes de acceder a su ID
+                    if (ruta.getBus() != null) {
+                        dto.setIdBus(ruta.getBus().getId());
+                    } else {
+                        dto.setIdBus(null);
+                    }
+
+                    // Directamente asignamos la lista de estaciones de la ruta
+                    dto.setEstaciones(ruta.getEstaciones());
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     @PostMapping
