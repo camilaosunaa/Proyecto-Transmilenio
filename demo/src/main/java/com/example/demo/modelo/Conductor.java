@@ -38,7 +38,7 @@ public class Conductor {
     private String direccion;
 
 
-    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Bus> buses;
 

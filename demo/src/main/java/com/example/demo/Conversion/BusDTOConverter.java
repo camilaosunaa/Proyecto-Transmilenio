@@ -18,14 +18,31 @@ public class BusDTOConverter {
 
     @Autowired
     private ServiceConductor serviceConductor;
-    public BusDTO EntityToDTO(Bus bus){
-        return new BusDTO(bus.getId(), bus.getPlaca(), bus.getModelo(), bus.getConductor().getId());
+    public static BusDTO EntityToDTO(Bus bus) {
+        BusDTO busDTO = new BusDTO();
+
+        // Verificamos si el conductor es null
+        if (bus.getConductor() != null) {
+            busDTO.setIdConductor(bus.getConductor().getId());
+        } else {
+            busDTO.setIdConductor(null);  // Manejo del caso cuando no hay conductor
+        }
+
+        // Continúa con el resto del mapeo de propiedades
+        busDTO.setId(bus.getId());
+        busDTO.setPlaca(bus.getPlaca());
+        busDTO.setModelo(bus.getModelo());
+
+        return busDTO;
     }
 
     public Bus DTOToEntity(BusDTO busDTO){
-        Conductor conductor = serviceConductor.recuperarConductor(busDTO.getIdConductor());
-        if (conductor == null) {
-            throw new RuntimeException("Ruta no encontrada con ID: " + busDTO.getIdConductor());
+        Conductor conductor = null;
+        if (busDTO.getIdConductor() != null) {
+            conductor = serviceConductor.recuperarConductor(busDTO.getIdConductor());
+            if (conductor == null) {
+                throw new RuntimeException("Conductor no encontrado con ID: " + busDTO.getIdConductor());
+            }
         }
         return new Bus(busDTO.getId(), busDTO.getPlaca(), busDTO.getModelo(), conductor);
     }

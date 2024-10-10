@@ -17,18 +17,25 @@ public class RutaDTOConverter {
     @Autowired
     private ServiceBus serviceBus;
 
+    // Convertir de Entidad a DTO
     public RutaDTO EntityToDTO(Ruta ruta) {
-        return new RutaDTO(ruta.getId(), ruta.getCodigo(), ruta.getEstaciones(),ruta.getBus().getId(), ruta.getHorario());
+        Long idBus = ruta.getBus() != null ? ruta.getBus().getId() : null;  // Permitir que idBus sea null
+        return new RutaDTO(ruta.getId(), ruta.getCodigo(), ruta.getEstaciones(), idBus, ruta.getHorario());
     }
 
+    // Convertir de DTO a Entidad
     public Ruta DTOToEntity(RutaDTO rutaDTO) {
-
-        Bus bus = serviceBus.findBusById(rutaDTO.getIdBus());
-        if(bus == null){
-            throw  new RuntimeException("Bus no encontrado con ID: " + rutaDTO.getIdBus());
+        Bus bus = null;
+        if (rutaDTO.getIdBus() != null && rutaDTO.getIdBus() != 0) {
+            bus = serviceBus.findBusById(rutaDTO.getIdBus());
+            if (bus == null) {
+                throw new RuntimeException("Bus no encontrado con ID: " + rutaDTO.getIdBus());
+            }
         }
-        return new Ruta(rutaDTO.getId(), rutaDTO.getCodigo(), rutaDTO.getEstaciones(),bus, rutaDTO.getHorario());
+        // Retorna la entidad Ruta, con bus posiblemente null
+        return new Ruta(rutaDTO.getId(), rutaDTO.getCodigo(), rutaDTO.getEstaciones(), bus, rutaDTO.getHorario());
     }
+
 
     public List<RutaDTO> entityToDTO(Optional<Ruta> rutas){
         // TODO Implementar

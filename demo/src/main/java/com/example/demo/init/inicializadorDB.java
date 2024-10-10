@@ -51,7 +51,7 @@ public class inicializadorDB implements CommandLineRunner {
                 "    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
                 "    placa VARCHAR(255) NOT NULL,\n" +
                 "    modelo VARCHAR(255) NOT NULL,\n" +
-                "    id_conductor BIGINT,\n" +
+                "    id_conductor BIGINT NULL,\n" +
                 "    FOREIGN KEY (id_conductor) REFERENCES conductor(id))");
 
 // Crear tabla asignacion

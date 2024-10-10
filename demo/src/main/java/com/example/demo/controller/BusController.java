@@ -37,23 +37,39 @@ public class BusController {
     }
 
     @GetMapping
-    public List<BusDTO> RecuperarBuses(){
+    public List<BusDTO> RecuperarBuses() {
+        // Recuperamos todos los buses
         List<Bus> buses = serviceBus.recuperarTodosBuses();
-
-        // Convertir lista de buses a lista de DTOs
+        // Convertimos la lista de buses a una lista de DTOs
         List<BusDTO> busesDTO = buses.stream()
-                .map(bus -> new BusDTO(
-                        bus.getId(),
-                        bus.getPlaca(),
-                        bus.getModelo(),
-                        bus.getConductor().getId()))
+                .map(bus -> {
+                    // Verificamos si el conductor está presente
+                    Long conductorId = bus.getConductor() != null ? bus.getConductor().getId() : null;
+
+                    // Mapear los datos a BusDTO
+                    return new BusDTO(
+                            bus.getId(),
+                            bus.getPlaca(),
+                            bus.getModelo(),
+                            conductorId); // Asignamos el ID del conductor o null
+                })
                 .collect(Collectors.toList());
+
+        // Retornamos la lista de BusDTO
         return busesDTO;
     }
 
+
     @PostMapping
-    public BusDTO CrearBuses(@RequestBody BusDTO busDTO){
-        return serviceBus.createBus(busDTO);
+    public ResponseEntity<Bus> crearBus(@RequestBody BusDTO busDTO) {
+        try {
+            // Llamamos al servicio para crear el bus
+            Bus nuevoBus = serviceBus.createBus(busDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoBus);
+        } catch (Exception e) {
+            // Si hay un error, retornamos un 400 Bad Request
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @PutMapping("/{idBus}")
@@ -64,6 +80,16 @@ public class BusController {
     @GetMapping("/conductor/{idconductor}")
     public List<BusDTO> busesPorIdConductor(@PathVariable Long idconductor){
         return serviceBus.recuperarBusPorIdConductor(idconductor);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBus(@PathVariable Long id) {
+        try {
+            serviceBus.deleteBus(id);
+            return ResponseEntity.ok("Bus eliminado con éxito.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
 }
 

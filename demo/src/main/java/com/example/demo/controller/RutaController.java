@@ -56,4 +56,14 @@ public class RutaController {
         return serviceRuta.buscarRutaPorIdBus(idbus);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRuta(@PathVariable Long id) {
+        try {
+            serviceRuta.deleteRuta(id);
+            return ResponseEntity.ok("Ruta eliminada con éxito.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(e.getMessage()); // Error si no se puede eliminar
+        }
+    }
+
 }

@@ -33,9 +33,19 @@ public class ServiceConductor {
         return conductorDTOConverter.EntityToDTO(repositorioConductor.save(conductor));
     }
 
-    public ConductorDTO UpdateConductor(Long id, ConductorDTO conductorDTO){
+    public ConductorDTO UpdateConductor(Long id, ConductorDTO conductorDTO) {
+        // Convertir DTO a entidad
         Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
         conductor.setId(id);
+
+        // Verifica y maneja la lista de buses para no borrar huérfanos innecesarios
+        if (conductor.getBuses() != null) {
+            for (Bus bus : conductor.getBuses()) {
+                bus.setConductor(conductor); // Asegúrate de que cada bus apunte correctamente al conductor
+            }
+        }
+
+        // Guardar el conductor actualizado
         return conductorDTOConverter.EntityToDTO(repositorioConductor.save(conductor));
     }
 

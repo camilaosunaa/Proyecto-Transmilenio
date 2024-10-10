@@ -28,11 +28,11 @@ public class Ruta {
     @Column(name = "estacion")
     private List<String> estaciones;
 
-    @ManyToOne
-    @JoinColumn(name = "idbus",referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idbus",referencedColumnName = "id", nullable = true)
     private Bus bus;
 
-    @JoinColumn(name = "horario",nullable = false)
+    @Column(name = "horario", nullable = true)
     private String horario;
 }
 

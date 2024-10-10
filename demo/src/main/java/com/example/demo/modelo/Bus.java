@@ -33,8 +33,8 @@ public class Bus {
     @JsonIgnore
     private List<Ruta> rutas;
 
-    @ManyToOne
-    @JoinColumn(name = "id_conductor")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_conductor", nullable = true)
     private Conductor conductor;
 
     public Bus(Long id, String placa, String modelo,Conductor conductor) {

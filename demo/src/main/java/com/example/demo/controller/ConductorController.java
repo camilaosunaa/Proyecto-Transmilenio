@@ -49,9 +49,24 @@
         }
 
         @PutMapping("/{idConductor}")
-        public ConductorDTO actualizarConductor(@PathVariable Long idConductor, @RequestBody ConductorDTO conductorDTO){
-            return serviceConductor.UpdateConductor(idConductor,conductorDTO);
+        public ResponseEntity<ConductorDTO> actualizarConductor(@PathVariable Long idConductor, @RequestBody ConductorDTO conductorDTO) {
+            try {
+                ConductorDTO updatedConductor = serviceConductor.UpdateConductor(idConductor, conductorDTO);
+                return ResponseEntity.status(HttpStatus.OK).body(updatedConductor);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(null);
+            }
         }
 
-
+        @DeleteMapping("/{id}")
+        public ResponseEntity<String> eliminarConductor(@PathVariable Long id) {
+            try {
+                serviceConductor.EliminarConductor(id);
+                return ResponseEntity.ok("Conductor eliminado con éxito");
+            }  catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error al eliminar el conductor: " + e.getMessage());
+            }
+        }
     }
