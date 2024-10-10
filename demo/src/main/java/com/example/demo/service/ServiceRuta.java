@@ -44,9 +44,9 @@ public class ServiceRuta {
         return rutaDTOConverter.EntityToDTO(RecuperarRuta(id));
     }
 
-    public RutaDTO createRuta(RutaDTO rutaDTO) {
+    public Ruta createRuta(RutaDTO rutaDTO) {
         Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
-        return rutaDTOConverter.EntityToDTO(repositorioRuta.save(ruta));
+        return repositorioRuta.save(ruta);
     }
 
     public List<RutaDTO> buscarRutaPorIdBus(Long idbus) {

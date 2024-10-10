@@ -62,7 +62,7 @@ public class inicializadorDB implements CommandLineRunner {
         jdbcTemplate.execute("CREATE TABLE ruta (\n" +
                 "    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
                 "    codigo VARCHAR(255) NOT NULL,\n" +
-                "    idbus BIGINT NOT NULL,\n" +
+                "    idbus BIGINT NULL,\n" +
                 "    horario VARCHAR(255) NOT NULL,\n" +
                 "    FOREIGN KEY (idbus) REFERENCES bus(id))");
 

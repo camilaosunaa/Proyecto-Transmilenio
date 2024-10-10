@@ -42,8 +42,13 @@ public class RutaController {
     }
 
     @PostMapping
-    public RutaDTO CrearRuta(@RequestBody RutaDTO rutaDTO){
-        return serviceRuta.createRuta(rutaDTO);
+    public ResponseEntity<Ruta> CrearRuta(@RequestBody RutaDTO rutaDTO){
+        try{
+            Ruta ruta = serviceRuta.createRuta(rutaDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(ruta);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @PutMapping("/{idruta}")
