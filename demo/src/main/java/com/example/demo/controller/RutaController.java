@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ruta")
-public class RutaController {
+public class
+RutaController {
     @Autowired
     private ServiceRuta serviceRuta;
 
@@ -27,7 +29,8 @@ public class RutaController {
                 .body(rutaDTO);
     }
 
-    @GetMapping
+    @Secured({ "Cliente" })
+    @GetMapping("/list")
     public List<RutaDTO> RecuperarRutas() {
         return serviceRuta.RecuperarTodaRuta().stream()
                 .map(ruta -> {

@@ -72,4 +72,13 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(jwtPrivateKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    public String extractRoleFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())  // Asegúrate de usar la misma clave de firma
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return (String) claims.get("role");  // Extrae el rol de los claims
+    }
 }
