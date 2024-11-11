@@ -21,7 +21,7 @@ RutaController {
     @Autowired
     private ServiceRuta serviceRuta;
 
-    @Secured({ "AdminRutas"})
+    @Secured({ "AdminRutas","Cliente"})
     @GetMapping("/{idruta}")
     public ResponseEntity<RutaDTO> RecuperarRuta(@PathVariable Long idruta){
         RutaDTO rutaDTO = serviceRuta.getRuta(idruta);
@@ -30,7 +30,7 @@ RutaController {
                 .body(rutaDTO);
     }
 
-    @Secured({ "AdminRutas" })
+    @Secured({ "AdminRutas" , "Cliente"})
     @GetMapping("/list")
     public List<RutaDTO> RecuperarRutas() {
         return serviceRuta.RecuperarTodaRuta().stream()
