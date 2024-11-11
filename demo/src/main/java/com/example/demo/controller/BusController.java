@@ -38,7 +38,7 @@ public class BusController {
                 .body(busDTO);
     }
 
-    @Secured({"Coordinador"})
+    @Secured({"Coordinador", "AdminRutas"})
     @GetMapping
     public List<BusDTO> RecuperarBuses() {
         // Recuperamos todos los buses
