@@ -9,6 +9,7 @@ import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.example.demo.repositories.RepositorioAsignacion;
 import com.example.demo.repositories.RepositorioBus;
@@ -27,6 +28,13 @@ public class inicializadorDB implements CommandLineRunner {
     private RepositorioRuta repositorioRuta;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public void run(String... args) throws Exception {// Eliminar las tablas existentes
@@ -145,6 +153,12 @@ public class inicializadorDB implements CommandLineRunner {
 
         // Guarda la asignación
         repositorioAsignacion.save(asignacion);
+
+        User coordinador = new User("Carlos", "Coordinador", "coordinador@example.com", passwordEncoder.encode("password123"), Rol.Coordinador);
+        User adminRutas = new User("Ana", "Admin", "adminrutas@example.com", passwordEncoder.encode("password123"), Rol.AdminRutas);
+
+        userRepository.save(coordinador);
+        userRepository.save(adminRutas);
     }
 }
 

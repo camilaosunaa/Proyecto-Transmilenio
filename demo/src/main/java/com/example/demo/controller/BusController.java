@@ -10,7 +10,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,7 @@ public class BusController {
     @Autowired
     private ServiceBus serviceBus;
 
-
+    @Secured({"Coordinador"})
     @GetMapping("/{idBus}")
     public ResponseEntity<BusDTO> RecuperaBus(@PathVariable Long idBus){
         BusDTO busDTO = serviceBus.getBUs(idBus);
@@ -36,6 +38,7 @@ public class BusController {
                 .body(busDTO);
     }
 
+    @Secured({"Coordinador"})
     @GetMapping
     public List<BusDTO> RecuperarBuses() {
         // Recuperamos todos los buses
@@ -59,7 +62,7 @@ public class BusController {
         return busesDTO;
     }
 
-
+    @Secured({"Coordinador"})
     @PostMapping
     public ResponseEntity<Bus> crearBus(@RequestBody BusDTO busDTO) {
         try {
@@ -72,16 +75,19 @@ public class BusController {
         }
     }
 
+    @Secured({"Coordinador"})
     @PutMapping("/{idBus}")
     public BusDTO actualizarBus(@PathVariable Long idBus, @RequestBody BusDTO busDTO){
         return serviceBus.UpdateBus(idBus,busDTO);
     }
 
+    @Secured({"Coordinador"})
     @GetMapping("/conductor/{idconductor}")
     public List<BusDTO> busesPorIdConductor(@PathVariable Long idconductor){
         return serviceBus.recuperarBusPorIdConductor(idconductor);
     }
 
+    @Secured({"Coordinador"})
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBus(@PathVariable Long id) {
         try {

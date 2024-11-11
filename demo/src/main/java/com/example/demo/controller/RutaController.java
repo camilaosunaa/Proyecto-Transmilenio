@@ -21,6 +21,7 @@ RutaController {
     @Autowired
     private ServiceRuta serviceRuta;
 
+    @Secured({ "AdminRutas"})
     @GetMapping("/{idruta}")
     public ResponseEntity<RutaDTO> RecuperarRuta(@PathVariable Long idruta){
         RutaDTO rutaDTO = serviceRuta.getRuta(idruta);
@@ -29,7 +30,7 @@ RutaController {
                 .body(rutaDTO);
     }
 
-    @Secured({ "Cliente" })
+    @Secured({ "AdminRutas" })
     @GetMapping("/list")
     public List<RutaDTO> RecuperarRutas() {
         return serviceRuta.RecuperarTodaRuta().stream()
@@ -54,6 +55,7 @@ RutaController {
                 .collect(Collectors.toList());
     }
 
+    @Secured({ "AdminRutas" })
     @PostMapping
     public ResponseEntity<Ruta> CrearRuta(@RequestBody RutaDTO rutaDTO){
         try{
@@ -64,16 +66,19 @@ RutaController {
         }
     }
 
+    @Secured({ "AdminRutas" })
     @PutMapping("/{idruta}")
     public RutaDTO ActualizarRuta(@PathVariable Long idruta, @RequestBody RutaDTO rutaDTO){
         return serviceRuta.updateRuta(idruta,rutaDTO);
     }
 
+    @Secured({ "AdminRutas", "Coordinador" })
     @GetMapping("/bus/{idbus}")
     public List<RutaDTO> recuperarRutasPorIdbus(@PathVariable Long idbus){
         return serviceRuta.buscarRutaPorIdBus(idbus);
     }
 
+    @Secured({ "AdminRutas" })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRuta(@PathVariable Long id) {
         try {

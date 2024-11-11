@@ -9,6 +9,7 @@
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
+    import org.springframework.security.access.annotation.Secured;
     import org.springframework.web.bind.annotation.*;
 
     @RestController
@@ -18,6 +19,7 @@
         @Autowired
         private ServiceConductor serviceConductor;
 
+        @Secured({"Coordinador"})
         @GetMapping("/{idconductor}")
         public ResponseEntity<ConductorDTO> RecuperarConductor(@PathVariable Long idconductor){
             ConductorDTO conductorDTO = serviceConductor.getConductor(idconductor);
@@ -26,6 +28,7 @@
                     .body(conductorDTO);
         }
 
+        @Secured({"Coordinador"})
         @GetMapping
         public List<ConductorDTO> RecuperarConductores() {
             List<Conductor> conductores = serviceConductor.recuperarTodoConductor();
@@ -43,11 +46,13 @@
             return conductoresDTO;
         }
 
+        @Secured({"Coordinador"})
         @PostMapping
         public ConductorDTO CrearConductor(@RequestBody ConductorDTO conductorDTO){
             return serviceConductor.createConductor(conductorDTO);
         }
 
+        @Secured({"Coordinador"})
         @PutMapping("/{idConductor}")
         public ResponseEntity<ConductorDTO> actualizarConductor(@PathVariable Long idConductor, @RequestBody ConductorDTO conductorDTO) {
             try {
@@ -59,6 +64,7 @@
             }
         }
 
+        @Secured({"Coordinador"})
         @DeleteMapping("/{id}")
         public ResponseEntity<String> eliminarConductor(@PathVariable Long id) {
             try {
