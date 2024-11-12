@@ -19,7 +19,6 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authenticationService;
-
     @PostMapping("/signup")
     public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody UserRegistrationDTO request) {
         return ResponseEntity.ok(authenticationService.signup(request));
